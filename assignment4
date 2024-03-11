@@ -1,0 +1,33 @@
+# Clone the repository
+git clone https://github.com/your-username/assignment4.git
+
+# Move into the repository directory
+cd assignment4
+
+# Create and switch to the 'workinprogress' branch
+git checkout -b workinprogress
+
+# Create the myinfo.html file
+echo "Assignment4" > myinfo.html
+
+# Create the data directory and dummy-content.txt file
+mkdir data
+touch data/dummy-content.txt
+
+# Create the Containerfile
+cat <<EOF > Containerfile
+FROM fedora:latest
+
+RUN dnf -y upgrade && \
+    dnf -y install tuxpaint vim httpd && \
+    mkdir -p /var/www/html/
+
+COPY myinfo.html /var/www/html/
+EXPOSE 80/tcp
+ENTRYPOINT ["/usr/sbin/httpd", "-DFOREGROUND"]
+EOF
+
+# Add, commit, and push changes to GitHub
+git add .
+git commit -m "Added myinfo.html, dummy-content.txt, and Containerfile"
+git push origin workinprogress
